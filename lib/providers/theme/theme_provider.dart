@@ -10,7 +10,8 @@ class ThemeProvider extends StateNotifier<ThemeState> with LocatorMixin {
 
   @override
   void update(Locator watch) {
-    if (watch<WeatherProvider>().state.weather.temp > kWarmOrNot) {
+    final wp = watch<WeatherState>().weather;
+    if (wp.temp > kWarmOrNot) {
       state = state.copyWith(appTheme: AppTheme.light);
     } else {
       state = state.copyWith(appTheme: AppTheme.dark);

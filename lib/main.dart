@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:open_weather_provider/pages/home_page.dart';
 import 'package:open_weather_provider/providers/providers.dart';
 import 'package:open_weather_provider/providers/theme/theme_provider.dart';
-import 'package:open_weather_provider/providers/weather/weather_provider.dart';
 import 'package:open_weather_provider/repositories/weather_repository.dart';
 import 'package:open_weather_provider/services/weather_api_services.dart';
 import 'package:provider/provider.dart';
@@ -30,26 +29,21 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        StateNotifierProvider(
+        StateNotifierProvider<WeatherProvider, WeatherState>(
           create: (context) => WeatherProvider(),
         ),
-        ChangeNotifierProvider(
+        StateNotifierProvider<TempSettingsProvider, TempSettingsState>(
           create: (context) => TempSettingsProvider(),
         ),
-        ProxyProvider<WeatherProvider, ThemeProvider>(
-          update: (
-            BuildContext context,
-            WeatherProvider weatherProvider,
-            _,
-          ) =>
-              ThemeProvider(wp: weatherProvider),
+        StateNotifierProvider<ThemeProvider, ThemeState>(
+          create: (context) => ThemeProvider(),
         ),
       ],
       builder: (context, _) {
         return MaterialApp(
           title: 'Weather App',
           debugShowCheckedModeBanner: false,
-          theme: context.watch<ThemeProvider>().state.appTheme == AppTheme.light
+          theme: context.watch<ThemeState>().appTheme == AppTheme.light
               ? ThemeData.light()
               : ThemeData.dark(),
           home: const HomePage(),
