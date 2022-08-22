@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:open_weather_provider/constants/constants.dart';
 import 'package:open_weather_provider/pages/search_page.dart';
+import 'package:open_weather_provider/pages/settings_page.dart';
+import 'package:open_weather_provider/providers/providers.dart';
 import 'package:open_weather_provider/providers/weather/weather_provider.dart';
 import 'package:open_weather_provider/widgets/error_dialog.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +40,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   String showTemperature(double temperature) {
+    final tempUnit = context.watch<TempSettingsProvider>().state.tempUnit;
+    if (tempUnit == TempUnit.fahrenheit) {
+      return ((temperature * 9 / 5) + 32).toStringAsFixed(2) + '℉';
+    }
+
     return temperature.toStringAsFixed(2) + '℃';
   }
 
@@ -173,6 +180,17 @@ class _HomePageState extends State<HomePage> {
               }
             },
             icon: Icon(Icons.search),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) {
+                  return SettingsPage();
+                }),
+              );
+            },
+            icon: Icon(Icons.settings),
           ),
         ],
       ),
