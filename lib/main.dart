@@ -37,16 +37,18 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => TempSettingsProvider(),
         ),
-        ChangeNotifierProxyProvider<WeatherProvider, ThemeProvider>(
-          create: (context) => ThemeProvider(),
-          update: (BuildContext context, WeatherProvider weatherProvider,
-                  ThemeProvider? themeProvider) =>
-              themeProvider!..update(weatherProvider),
+        ProxyProvider<WeatherProvider, ThemeProvider>(
+          update: (
+            BuildContext context,
+            WeatherProvider weatherProvider,
+            _,
+          ) =>
+              ThemeProvider(wp: weatherProvider),
         ),
       ],
       builder: (context, _) {
         return MaterialApp(
-          title: 'Weather',
+          title: 'Weather App',
           debugShowCheckedModeBanner: false,
           theme: context.watch<ThemeProvider>().state.appTheme == AppTheme.light
               ? ThemeData.light()
