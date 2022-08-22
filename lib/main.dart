@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 import 'package:http/http.dart' as http;
 import 'package:open_weather_provider/pages/home_page.dart';
 import 'package:open_weather_provider/providers/providers.dart';
@@ -29,10 +30,8 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        ChangeNotifierProvider(
-          create: (context) => WeatherProvider(
-            weatherRepository: context.read<WeatherRepository>(),
-          ),
+        StateNotifierProvider(
+          create: (context) => WeatherProvider(),
         ),
         ChangeNotifierProvider(
           create: (context) => TempSettingsProvider(),

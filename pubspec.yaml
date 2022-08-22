@@ -12,9 +12,11 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_dotenv: ^5.0.2
+  flutter_state_notifier: ^0.7.1
   http: ^0.13.5
   provider: ^6.0.3
   recase: ^4.0.0
+  state_notifier: ^0.7.2+1
 
 dev_dependencies:
   flutter_lints: ^2.0.0
